@@ -1,0 +1,7 @@
+- hosts: example
+  roles:
+    - role: ssl-certificate
+      ssl_certificate_public_content: "{{ lookup('file', '/root/server.crt') }}"
+      ssl_certificate_key_content: "{{ lookup('file', '/root/server.key') }}"
+      ssl_certificate_selfsigned_create: False
+

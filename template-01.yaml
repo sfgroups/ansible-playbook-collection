@@ -1,0 +1,50 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: false
+  vars:
+    mystr: "This is the long string. With a url. http://example.org/12345"
+    url: 'http://www.sfgroups/pkg/abg.gz'
+    file_name: "{{ url | basename }}"
+    variable_to_be_replaced: 'Hello world'
+    inline_variable: 'hello again'
+  pre_tasks:
+  - name: Extract the substring using regex
+    set_fact:
+      substr: "{{ mystr  }}"
+  tasks:
+  #- name: Gather facts from new server
+#    setup:
+#        filter: ansible_default_ipv4.address
+#
+#  - name: print debug message
+#    debug:
+#      msg="{{ substr }} - {{ file_name }} - {{ ansible_default_ipv4.address }}"
+#
+#  - name: Ansible Template Example
+#    template:
+#      src: hello_world.j2
+#      dest: test.txt
+#
+#  - name: capture output of id command
+#    command: id -un
+#    register: login
+#
+#  - debug: msg="Logged in as user {{ login.stdout }}"
+  - name: Make sure a service is running
+    systemd:
+        state: stopped
+        name: nginx
+        enabled: no
+
+  - name: Ensure haproxy18u packages are present
+    yum:
+      name: haproxy18u
+      state: present
+
+  - name: Make sure a haproxy is running
+    systemd:
+        state: started
+        name: haproxy
+        enabled: yes
+    

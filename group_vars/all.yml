@@ -1,0 +1,2 @@
+domainname: sfgroups.io
+ldappath: /opt/ldap/data

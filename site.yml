@@ -1,0 +1,6 @@
+- hosts: localhost
+  gather_facts: yes
+  strategy: debug
+  become: yes
+  roles:
+    - { role: common }
